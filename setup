@@ -47,7 +47,7 @@ if ("nothing to commit, working tree clean" != $status) {
 }
 
 $file = "app.json";
-preg_match('/("build": )"(\s*)"/', "\\1\"{$build}\"", file_get_contents($file), $matches);
+preg_match('/("build": )"(\s*)"/', file_get_contents($file), $matches);
 var_dump($matches);
 exit(0);
 
