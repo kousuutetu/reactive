@@ -54,13 +54,13 @@ if (strncasecmp($answer, 'y', 1)) {
 }
 
 $file = "market.json";
-echo "   Setting up market names [multiple division by ',', default is official] ";
+echo "   Setting up market names, multiple division by ',', [official] ";
 $answer = trim(fgets(STDIN));
 $market = $answer ? explode(",", $answer) : ["official"];
 echo "   Start packing...\n";
 foreach ($market as $value) {
     file_put_contents("market.json", json_encode(["name" => $value]));
     system("cd android && ./gradlew assembleRelease");
-    exec("cd android/app/build/outputs/apk && mv app-release* market-{$value}.apk");
+    exec("cd android/app/build/outputs/apk && mv app-release* app-market-{$value}-.apk");
 }
 system("ls android/app/build/outputs/apk");
