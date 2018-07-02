@@ -49,13 +49,13 @@ if ("nothing to commit, working tree clean" != $status) {
 // package Android
 echo "Whether to package Android?  [Yes|No] ";
 $answer = trim(fgets(STDIN));
-if (!strncasecmp($answer, 'n', 1)) {
+if (strncasecmp($answer, 'y', 1)) {
     exit(0);
 }
 
 $file = "market.json";
 $market = file_exists($file) ? json_decode(file_get_contents($file), true)["name"] : "official";
-echo "\n   Setting up market signs [{$market}] ";
+echo "   Setting up market signs [{$market}] ";
 $answer = trim(fgets(STDIN));
 file_put_contents("market.json", json_encode(["name" => $answer ? $answer : $market]));
 
