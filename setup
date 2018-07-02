@@ -46,12 +46,6 @@ if ("nothing to commit, working tree clean" != $status) {
     exec("git commit -m '{$answer}'");
 }
 
-// Set up the build with git short version
-$build = exec("git rev-parse --short HEAD");
-$file = "app.json";
-$content = preg_replace('/("build": )"(\w*)"/', "\\1\"{$build}\"", file_get_contents($file));
-file_put_contents($file, $content);
-
 // Package Android
 echo "Whether to package Android?  [Yes|No] ";
 $answer = trim(fgets(STDIN));
@@ -59,13 +53,15 @@ if (strncasecmp($answer, 'y', 1)) {
     exit(0);
 }
 
+$build = exec("git rev-parse --short HEAD");
+
 $file = "market.json";
 echo "   Set the market name, multiple divided by \",\" [official] ";
 $answer = trim(fgets(STDIN));
 $market = $answer ? explode(",", $answer) : ["official"];
 echo "   Start packing...\n";
 foreach ($market as $value) {
-    file_put_contents("market.json", json_encode(["name" => $value]));
+    file_put_contents("market.json", json_encode(["name" => $value, "build" => $build]));
     system("cd android && ./gradlew assembleRelease");
     exec("cd android/app/build/outputs/apk && mv app-release* app-{$value}-{$build}.apk");
 }
