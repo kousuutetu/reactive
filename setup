@@ -61,3 +61,4 @@ file_put_contents("market.json", json_encode(["name" => $answer ? $answer : $mar
 
 echo "   Start packing...\n";
 system("cd android && ./gradlew assembleRelease");
+exec("cd android/app/build/outputs/apk && mv app-release* market-{$market}.apk");
