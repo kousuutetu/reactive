@@ -3,10 +3,10 @@
 
 echo "Reactive Application Build Tool v1.0\n\n";
 
-// get app information
+// Get app information
 $app = json_decode(file_get_contents("app.json"), true);
 
-// set display name
+// Set display name
 echo "Set display name: {$app['displayName']}\n";
 
 $file = "android/app/src/main/res/values/strings.xml";
@@ -19,7 +19,7 @@ echo "   in $file\n";
 $content = preg_replace('/(<key>CFBundleDisplayName<\/key>(\s*)<string>)([\w|\s]*)(<\/string>)/', "\\1{$app['displayName']}\\4", file_get_contents($file));
 file_put_contents($file, $content);
 
-// set version
+// Set version
 echo "Set version: {$app['version']}\n";
 
 $file = "android/app/build.gradle";
@@ -32,7 +32,7 @@ echo "   in $file\n";
 $content = preg_replace('/(<key>CFBundleShortVersionString<\/key>(\s*)<string>)([\d|\.]*)(<\/string>)/', "\\1 {$app['version']}\\4", file_get_contents($file));
 file_put_contents($file, $content);
 
-// submit git
+// Submit git
 $status = exec("git status");
 if ("nothing to commit, working tree clean" != $status) {
     echo "Submit git\n";
@@ -46,13 +46,13 @@ if ("nothing to commit, working tree clean" != $status) {
     exec("git commit -m '{$answer}'");
 }
 
-// set build by git short version
+// Set up the build with git short version
 $build = exec("git rev-parse --short HEAD");
 $file = "app.json";
 $content = preg_replace('/("build": )"(\w*)"/', "\\1\"{$build}\"", file_get_contents($file));
 file_put_contents($file, $content);
 
-// package Android
+// Package Android
 echo "Whether to package Android?  [Yes|No] ";
 $answer = trim(fgets(STDIN));
 if (strncasecmp($answer, 'y', 1)) {
