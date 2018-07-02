@@ -54,6 +54,7 @@ if (strncasecmp($answer, 'y', 1)) {
 }
 
 $build = exec("git rev-parse --short HEAD");
+$env = $app["debug"] ? "dev" : "release";
 
 $file = "market.json";
 echo "   Set the market name, multiple divided by \",\" [official] ";
