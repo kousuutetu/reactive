@@ -46,6 +46,11 @@ if ("nothing to commit, working tree clean" != $status) {
     exec("git commit -m '{$answer}'");
 }
 
+$build = exec("git rev-parse --short HEAD");
+$file = "app.json";
+$content = preg_replace('/(("build": )"(\s*)")/', "\\1\"{$build}\"", file_get_contents($file));
+file_put_contents($file, $content);
+
 // package Android
 echo "Whether to package Android?  [Yes|No] ";
 $answer = trim(fgets(STDIN));
