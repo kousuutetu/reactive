@@ -58,4 +58,5 @@ echo "\nSetting up market signs [{$market}] ";
 $answer = trim(fgets(STDIN));
 file_put_contents("market.json", json_encode(["name" => $answer ? $answer : $market]));
 
+echo "\nStart packing\n";
 system("cd android && ./gradlew assembleRelease");
