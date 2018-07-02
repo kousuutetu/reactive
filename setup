@@ -48,6 +48,7 @@ if ("nothing to commit, working tree clean" != $status) {
 
 // package Android
 echo "Whether to package Android?  [Yes|No] ";
+$answer = trim(fgets(STDIN));
 if (!strncasecmp($answer, 'n', 1)) {
     exit(0);
 }
