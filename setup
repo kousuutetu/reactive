@@ -67,6 +67,6 @@ echo "   Start packing...\n";
 foreach ($market as $value) {
     file_put_contents("market.json", json_encode(["name" => $value]));
     system("cd android && ./gradlew assembleRelease");
-    exec("cd android/app/build/outputs/apk && mv app-release* app-market-{$value}-{$build}.apk");
+    exec("cd android/app/build/outputs/apk && mv app-release* app-{$value}-{$build}.apk");
 }
 system("ls android/app/build/outputs/apk");
