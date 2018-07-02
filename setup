@@ -35,14 +35,14 @@ file_put_contents($file, $content);
 // submit git
 echo "Submit git\n";
 
-system("git add .");
+exec("git add .");
 echo "   commit message: ";
 $answer = trim(fgets(STDIN));
 if (!$answer) {
     echo "\n  Quit submit.\n";
     exit(0);
 }
-system("git commit -m '{$answer}'");
+exec("git commit -m '{$answer}'");
 
 $file = "market.json";
 $market = file_exists($file) ? json_decode(file_get_contents($file), true)["name"] : "official";
