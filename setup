@@ -33,20 +33,29 @@ $content = preg_replace('/(<key>CFBundleShortVersionString<\/key>(\s*)<string>)(
 file_put_contents($file, $content);
 
 // submit git
-echo "Submit git\n";
+$status = exec("git status");
+if ("nothing to commit, working tree clean" != $status) {
+    echo "Submit git\n";
+    exec("git add .");
+    echo "   commit message: ";
+    $answer = trim(fgets(STDIN));
+    if (!$answer) {
+        echo "\n  Quit submit.\n";
+        exit(0);
+    }
+    exec("git commit -m '{$answer}'");
+}
 
-exec("git add .");
-echo "   commit message: ";
-$answer = trim(fgets(STDIN));
-if (!$answer) {
-    echo "\n  Quit submit.\n";
+// package Android
+echo "Whether to package Android?  [Yes|No] ";
+if (!strncasecmp($answer, 'n', 1)) {
     exit(0);
 }
-exec("git commit -m '{$answer}'");
 
 $file = "market.json";
 $market = file_exists($file) ? json_decode(file_get_contents($file), true)["name"] : "official";
 echo "\nSetting up market signs [{$market}] ";
 $answer = trim(fgets(STDIN));
-
 file_put_contents("market.json", json_encode(["name" => $answer ? $answer : $market]));
+
+system("cd android && ./gradlew assembleRelease");
