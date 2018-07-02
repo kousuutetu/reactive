@@ -54,9 +54,9 @@ if (!strncasecmp($answer, 'n', 1)) {
 
 $file = "market.json";
 $market = file_exists($file) ? json_decode(file_get_contents($file), true)["name"] : "official";
-echo "\nSetting up market signs [{$market}] ";
+echo "\n   Setting up market signs [{$market}] ";
 $answer = trim(fgets(STDIN));
 file_put_contents("market.json", json_encode(["name" => $answer ? $answer : $market]));
 
-echo "Start packing...\n";
+echo "   Start packing...\n";
 system("cd android && ./gradlew assembleRelease");
