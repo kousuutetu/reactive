@@ -54,7 +54,7 @@ if (strncasecmp($answer, 'y', 1)) {
 }
 
 $file = "market.json";
-echo "   Setting up market names, multiple division by ',', [official] ";
+echo "   Set the market name, multiple divided by \",\" [official] ";
 $answer = trim(fgets(STDIN));
 $market = $answer ? explode(",", $answer) : ["official"];
 echo "   Start packing...\n";
