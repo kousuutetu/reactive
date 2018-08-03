@@ -4,6 +4,9 @@ import List from './list';
 import Form from './form';
 import Button from './button';
 import Navigator from './navigator';
+import Gallery from './gallery';
+import Stream from './stream';
+import Nesting from './nesting';
 
 export default {
   Home,
@@ -12,4 +15,7 @@ export default {
   Form,
   Button,
   Navigator,
+  Gallery,
+  Stream,
+  Nesting,
 }

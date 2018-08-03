@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import _ from 'lodash';
 
 import { list, colors } from '../utils/constant';
 
@@ -11,42 +12,39 @@ export default class Screen extends Component {
   render() {
     const { navigate } = this.props.navigation
 
-    return <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.list}>
-          <TouchableOpacity onPress={() => navigate('List')} style={styles.item}>
-            <View style={styles.left}>
-              <Text style={styles.label}>List</Text>
-            </View>
-            <View style={styles.right}>
-              <View style={styles.arrow}></View>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigate('Form')} style={styles.item}>
-            <View style={styles.left}>
-              <Text style={styles.label}>Form</Text>
-            </View>
-            <View style={styles.right}>
-              <View style={styles.arrow}></View>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigate('Button')} style={[styles.item]}>
-            <View style={styles.left}>
-              <Text style={styles.label}>Button</Text>
-            </View>
-            <View style={styles.right}>
-              <View style={styles.arrow}></View>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigate('Navigator')} style={[styles.item, styles.last]}>
-            <View style={styles.left}>
-              <Text style={styles.label}>Navigator</Text>
-            </View>
-            <View style={styles.right}>
-              <View style={styles.arrow}></View>
-            </View>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
+    let data = [
+      {name: 'Button'},
+      {name: 'List'},
+      {name: 'Form'},
+      {name: 'Gallery', params: {
+        images: [
+          'http://a.hiphotos.baidu.com/image/pic/item/f9198618367adab46aaccc9687d4b31c8601e4e3.jpg',
+          'http://a.hiphotos.baidu.com/image/pic/item/e824b899a9014c080665b767067b02087af4f492.jpg',
+          'http://h.hiphotos.baidu.com/image/pic/item/0824ab18972bd4070a6c702677899e510eb30945.jpg',
+        ]
+      }},
+      {name: 'Stream'},
+      {name: 'Nesting'},
+      {name: 'Navigator'},
+    ]
+
+    return <View style={styles.list}>
+      <FlatList
+        data={data}
+        renderItem={({item, index}) => <TouchableOpacity
+          onPress={() => navigate(item.name, _.get(item, 'params', {}))}
+          style={[styles.item, 0==index && styles.head]}>
+          <View style={styles.left}>
+            <Text style={styles.label}>{item.name}</Text>
+          </View>
+          <View style={styles.right}>
+            <View style={styles.arrow}></View>
+          </View>
+        </TouchableOpacity>}
+        keyExtractor={(item) => item.name}
+        showsVerticalScrollIndicator={false}
+      />
+    </View>
   }
 }
 
@@ -64,15 +62,15 @@ const styles = StyleSheet.create({
     minHeight: 43.8,
     marginLeft: 15,
     borderColor: list.border,
-    borderBottomWidth: 0.2,
+    borderTopWidth: 0.2,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingRight: 15,
   },
-  last: {
+  head: {
     minHeight: 44,
-    borderBottomWidth: 0,
+    borderTopWidth: 0,
   },
   left: {
     flexDirection: 'row',

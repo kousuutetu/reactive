@@ -16,9 +16,9 @@ export default StackNavigator({
       height: 44,
       elevation: 0,
       shadowOpacity: 0,
-      backgroundColor: '#303030',
+      backgroundColor: colors.main,
     },
-    headerTintColor: '#ffffff',
+    headerTintColor: colors.white,
     headerTitleStyle: {
       fontSize: 18,
     }

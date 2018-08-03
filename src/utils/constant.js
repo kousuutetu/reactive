@@ -1,8 +1,10 @@
 export const colors = {
-  background: '#efeff4',
+  main: '#303030',
+  gray: '#d9d9d9',
   black: '#000000',
   white: '#ffffff',
   danger: '#d45048',
+  background: '#efeff4',
 }
 
 export const list = {
